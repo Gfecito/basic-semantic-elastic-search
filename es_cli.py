@@ -37,6 +37,10 @@ def create_index():
         {'id': 1, 'name': 'Alice', 'age': 25, 'occupation': 'Engineer'},
         {'id': 2, 'name': 'Bob', 'age': 30, 'occupation': 'Designer'},
         {'id': 3, 'name': 'Charlie', 'age': 35, 'occupation': 'Doctor'},
+        {'id': 4, 'name': 'David', 'age': 40, 'occupation': 'Engineer'},
+        {'id': 5, 'name': 'Eve', 'age': 45, 'occupation': 'Designer'},
+        {'id': 6, 'name': 'Frank', 'age': 50, 'occupation': 'Cook'},
+        {'id': 7, 'name': 'Grace', 'age': 55, 'occupation': 'Delivery Driver'},
     ]
     
     # Create the index
@@ -68,8 +72,9 @@ def search(query):
         # Display results
         if response['hits']['hits']:
             click.echo(f"Found {len(response['hits']['hits'])} results:")
-            for hit in response['hits']['hits']:
-                click.echo(hit['_source'])
+            for source in response['hits']['hits']:
+                hit = source['_source']
+                click.echo(f"Hit name: {hit['name']}, age: {hit['age']}, occupation: {hit['occupation']}")
         else:
             click.echo("No results found.")
     else:
@@ -110,8 +115,8 @@ def semantic_search(query):
         # Display results
         click.echo(f"Found {len(indices[0])} closest results:")
         for idx in indices[0]:
-            hit = response['hits']['hits'][idx]
-            click.echo(hit['_source'])
+            hit = response['hits']['hits'][idx]['_source']
+            click.echo(f"Hit name: {hit['name']}, age: {hit['age']}, occupation: {hit['occupation']}")
     else:
         click.echo(f"Index {index_name} does not exist. Please create it first.")
 
