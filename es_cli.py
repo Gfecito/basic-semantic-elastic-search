@@ -1,5 +1,5 @@
 import click
-from elasticsearch import Elasticsearch
+from elasticsearch import Elasticsearch, warnings
 from transformers import AutoTokenizer, AutoModel
 import torch
 import numpy as np
@@ -206,4 +206,7 @@ def delete_index():
     service.delete_index(index_name)
 
 if __name__ == "__main__":
+    # Elastic Search complains that our cluster is unsafe (permissions).
+    # But thats fine because this is a demo.
+    warnings.filterwarnings("ignore")
     cli()
